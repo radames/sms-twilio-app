@@ -55,7 +55,7 @@ app.get('/getDreams', function(request, response) {
 
 
 //rest post for new messages
-app.post("/newSms",  (request, response) => {
+app.post('/newSms',  (request, response) => {
     const msg = request.body;
     addMessagetoDB(msg);
     response.send('<Response></Response>');
@@ -63,12 +63,12 @@ app.post("/newSms",  (request, response) => {
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
+  console.log('"our app is listening on port ' + listener.address().port);
 });
-
-
 function addMessagetoDB(message){
+    const values = [message.SmsSid, message.FromCity, message.FromState, message.FromCountry, message.Body, message.From, new Date()].join(',');
+    console.log(values);
     db.serialize(function() {
-      db.run('INSERT INTO Messages (SmsSid, msg_fromCity, msg_fromState, msg_fromCountry, msg_body, msg_FromNumber, msg_datetime) VALUES ` `');
+      db.run(`INSERT INTO Messages (SmsSid, msg_fromCity, msg_fromState, msg_fromCountry, msg_body, msg_FromNumber, msg_datetime) VALUES (${values})`);
     });
 }
