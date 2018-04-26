@@ -25,10 +25,13 @@ db.serialize(function(){
   if (!exists) {
     db.run('CREATE TABLE Messages (msg_id integer PRIMARY KEY, msg_body TEXT, msg_number TEXT NOT NULL, msg_datetime TEXT NOT NULL)');
     console.log('New table Messages created!');
+     db.serialize(function() {
+      db.run('INSERT INTO Messages (msg_body, msg_number, msg_datetime) VALUES ("This is a test Message", "2323232323", "04/26/2018")');
+    });
   }
   else {
     console.log('Database "Messages" ready to go!');
-    db.each('SELECT * from Messages', function(err, row) 
+    db.each('SELECT * from Messages', function(err, row) {
       if ( row ) {
         console.log('record:', row);
       }
@@ -45,7 +48,7 @@ app.get("/", function (request, response) {
 // currently this is the only endpoint, ie. adding dreams won't update the database
 // read the sqlite3 module docs and try to add your own! https://www.npmjs.com/package/sqlite3
 app.get('/getDreams', function(request, response) {
-  db.all('SELECT * from Dreams', function(err, rows) {
+  db.all('SELECT * from Messages', function(err, rows) {
     response.send(JSON.stringify(rows));
   });
 });
@@ -54,7 +57,7 @@ app.get('/getDreams', function(request, response) {
 //rest post for new messages
 app.post("/newSms",  (request, response) => {
     const msg = request.body;
-    console.log(msg);
+    console.log(request);
     response.send('<Response></Response>');
 });
 
