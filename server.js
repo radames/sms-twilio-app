@@ -25,9 +25,6 @@ db.serialize(function(){
   if (!exists) {
     db.run('CREATE TABLE Messages (msg_id integer PRIMARY KEY, SmsSid TEXT, msg_fromCity TEXT, msg_fromState TEXT, msg_fromCountry TEXT, msg_body TEXT, msg_FromNumber TEXT NOT NULL, msg_datetime TEXT NOT NULL)');
     console.log('New table Messages created!');
-     db.serialize(function() {
-      db.run('INSERT INTO Messages (msg_body, msg_number, msg_datetime) VALUES ("This is a test Message", "2323232323", "04/26/2018")');
-    });
   }
   else {
     console.log('Database "Messages" ready to go!');
@@ -47,13 +44,11 @@ app.get("/", function (request, response) {
 // endpoint to get all the dreams in the database
 // currently this is the only endpoint, ie. adding dreams won't update the database
 // read the sqlite3 module docs and try to add your own! https://www.npmjs.com/package/sqlite3
-app.get('/getDreams', function(request, response) {
-  db.all('SELECT * from Messages', function(err, rows) {
+app.get('/getMessages', function(request, response) {
+  db.all('SELECT msg_fromCity, msg_fromState, msg_fromCountry, msg_body, msg_datetime from Messages ORDER BY msg_datetime', function(err, rows) {
     response.send(JSON.stringify(rows));
   });
 });
-
-
 //rest post for new messages
 app.post('/newSms',  (request, response) => {
     const msg = request.body;
@@ -61,10 +56,6 @@ app.post('/newSms',  (request, response) => {
     response.send('<Response></Response>');
 });
 
-// listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('"our app is listening on port ' + listener.address().port);
-});
 function addMessagetoDB(message){
     const values = [message.SmsSid, message.FromCity, message.FromState, message.FromCountry, message.Body, message.From, new Date()];
     const placeholders = values.map((e) => '(?)').join(',');
@@ -74,3 +65,7 @@ function addMessagetoDB(message){
       db.run(`INSERT INTO Messages (SmsSid, msg_fromCity, msg_fromState, msg_fromCountry, msg_body, msg_FromNumber, msg_datetime) VALUES (${placeholders})`, values);
     });
 }
+// listen for requests :)
+var listener = app.listen(process.env.PORT, function () {
+  console.log('"our app is listening on port ' + listener.address().port);
+});
