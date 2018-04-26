@@ -23,14 +23,12 @@ var db = new sqlite3.Database(dbFile);
 // if ./.data/sqlite.db does not exist, create it, otherwise print records to console
 db.serialize(function(){
   if (!exists) {
-    db.run('CREATE TABLE Messages (messagebody TEXT)');
+    db.run('CREATE TABLE Messages (msg_id integer PRIMARY KEY, msg_body TEXT, msg_number TEXT NOT NULL, msg_datetime TEXT NOT NULL)');
     console.log('New table Messages created!');
-    
-
   }
   else {
-    console.log('Database "Dreams" ready to go!');
-    db.each('SELECT * from Dreams', function(err, row) {
+    console.log('Database "Messages" ready to go!');
+    db.each('SELECT * from Messages', function(err, row) 
       if ( row ) {
         console.log('record:', row);
       }
@@ -56,9 +54,9 @@ app.get('/getDreams', function(request, response) {
 //rest post for new messages
 app.post("/newSms",  (request, response) => {
     const msg = request.body;
-  
+    console.log(msg);
     response.send('<Response></Response>');
-}
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
@@ -68,6 +66,6 @@ var listener = app.listen(process.env.PORT, function () {
 
 function addMessagetoDB(message){
     db.serialize(function() {
-      db.run('INSERT INTO Messages (messagebody) VALUES ("Find and count some sheep"), ("Climb a really tall mountain"), ("Wash the dishes")');
+      db.run('INSERT INTO Messages (messagebody) VALUES ("Find and count some sheep")');
     });
 }
