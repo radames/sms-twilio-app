@@ -23,7 +23,7 @@ var db = new sqlite3.Database(dbFile);
 // if ./.data/sqlite.db does not exist, create it, otherwise print records to console
 db.serialize(function(){
   if (!exists) {
-    db.run('CREATE TABLE Messages (msg_id integer PRIMARY KEY, msg_body TEXT, msg_number TEXT NOT NULL, msg_datetime TEXT NOT NULL)');
+    db.run('CREATE TABLE Messages (msg_id integer PRIMARY KEY, SmsSid TEXT, msg_fromCity TEXT, msg_fromState TEXT, msg_fromCountry TEXT, msg_body TEXT, msg_FromNumber TEXT NOT NULL, msg_datetime TEXT NOT NULL)');
     console.log('New table Messages created!');
      db.serialize(function() {
       db.run('INSERT INTO Messages (msg_body, msg_number, msg_datetime) VALUES ("This is a test Message", "2323232323", "04/26/2018")');
@@ -57,7 +57,7 @@ app.get('/getDreams', function(request, response) {
 //rest post for new messages
 app.post("/newSms",  (request, response) => {
     const msg = request.body;
-    console.log(request);
+    addMessagetoDB(msg);
     response.send('<Response></Response>');
 });
 
@@ -69,6 +69,6 @@ var listener = app.listen(process.env.PORT, function () {
 
 function addMessagetoDB(message){
     db.serialize(function() {
-      db.run('INSERT INTO Messages (messagebody) VALUES ("Find and count some sheep")');
+      db.run('INSERT INTO Messages (SmsSid, msg_fromCity, msg_fromState, msg_fromCountry, msg_body, msg_FromNumber, msg_datetime) VALUES ` `');
     });
 }
