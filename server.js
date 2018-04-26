@@ -66,7 +66,7 @@ var listener = app.listen(process.env.PORT, function () {
   console.log('"our app is listening on port ' + listener.address().port);
 });
 function addMessagetoDB(message){
-    const values = [message.SmsSid, message.FromCity, message.FromState, message.FromCountry, message.Body, message.From, new Date()].join(',');
+    const values = [message.SmsSid, message.FromCity, message.FromState, message.FromCountry, message.Body, message.From, new Date()].map(e => !e?'NULL') join(',');
     console.log(values);
     db.serialize(function() {
       db.run(`INSERT INTO Messages (SmsSid, msg_fromCity, msg_fromState, msg_fromCountry, msg_body, msg_FromNumber, msg_datetime) VALUES (${values})`);
