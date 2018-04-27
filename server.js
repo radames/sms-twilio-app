@@ -56,7 +56,6 @@ app.post('/newSms',  (request, response) => {
     addMessagetoDB(msg);
     response.send('<Response></Response>');
 });
-
 function addMessagetoDB(message){
     const values = [message.SmsSid, message.FromCity, message.FromState, message.FromCountry, message.Body, message.From, new Date()];
     const placeholders = values.map((e) => '(?)').join(',');
@@ -70,3 +69,139 @@ function addMessagetoDB(message){
 var listener = app.listen(process.env.PORT, function () {
   console.log('"our app is listening on port ' + listener.address().port);
 });
+
+
+/*
+
+{ MediaContentType1: 'image/jpeg',
+
+  ToCountry: 'US',
+
+  MediaContentType0: 'audio/3gpp',
+
+  ToState: 'CA',
+
+  SmsMessageSid: 'MMe7a1290d5edc38b65c139e6584601a64',
+
+  NumMedia: '3',
+
+  MediaUrl2: 'https://api.twilio.com/2010-04-01/Accounts/AC45263062787d3eda8583d555e65c6b05/Messages/MMe7a1290d5edc38b65c139e6584601a64/Media/ME40c23b1519318d95fc4ca2248d982b4b',
+
+  ToCity: 'OAKLAND',
+
+  FromZip: '63834',
+
+  SmsSid: 'MMe7a1290d5edc38b65c139e6584601a64',
+
+  FromState: 'MO',
+
+  SmsStatus: 'received',
+
+  FromCity: 'CHARLESTON',
+
+  Body: '😀☺😍😂',
+
+  FromCountry: 'US',
+
+  To: '+15103450470',
+
+  MediaUrl1: 'https://api.twilio.com/2010-04-01/Accounts/AC45263062787d3eda8583d555e65c6b05/Messages/MMe7a1290d5edc38b65c139e6584601a64/Media/ME0f9086a5e80daa9b85916f471a785c0e',
+
+  ToZip: '94615',
+
+  NumSegments: '3',
+
+  MessageSid: 'MMe7a1290d5edc38b65c139e6584601a64',
+
+  AccountSid: 'AC45263062787d3eda8583d555e65c6b05',
+
+  MediaContentType2: 'image/gif',
+
+  From: '+15734270584',
+
+  MediaUrl0: 'https://api.twilio.com/2010-04-01/Accounts/AC45263062787d3eda8583d555e65c6b05/Messages/MMe7a1290d5edc38b65c139e6584601a64/Media/ME658c2005e6dc7a7c31c3fc40826913e5',
+
+  ApiVersion: '2010-04-01' }
+
+
+[ 'MMe7a1290d5edc38b65c139e6584601a64',
+
+  'CHARLESTON',
+
+  'MO',
+
+  'US',
+
+  '😀☺😍😂',
+
+  '+15734270584',
+
+  2018-04-27T03:51:46.651Z ]
+
+
+{ MediaContentType1: 'image/jpeg',
+
+  ToCountry: 'US',
+
+  MediaContentType0: 'image/gif',
+
+  ToState: 'CA',
+
+  SmsMessageSid: 'MMd43e72a131d5d27398c88c6ea5431094',
+
+  NumMedia: '3',
+
+  MediaUrl2: 'https://api.twilio.com/2010-04-01/Accounts/AC45263062787d3eda8583d555e65c6b05/Messages/MMd43e72a131d5d27398c88c6ea5431094/Media/ME31b72368becab85d1a5465bbbd4fe5e8',
+
+  ToCity: 'OAKLAND',
+
+  FromZip: '63834',
+
+  SmsSid: 'MMd43e72a131d5d27398c88c6ea5431094',
+
+  FromState: 'MO',
+
+  SmsStatus: 'received',
+
+  FromCity: 'CHARLESTON',
+
+  Body: 'Testando',
+
+  FromCountry: 'US',
+
+  To: '+15103450470',
+
+  MediaUrl1: 'https://api.twilio.com/2010-04-01/Accounts/AC45263062787d3eda8583d555e65c6b05/Messages/MMd43e72a131d5d27398c88c6ea5431094/Media/ME09b0ae7c6eeba9fd1e7adca65344f052',
+
+  ToZip: '94615',
+
+  NumSegments: '3',
+
+  MessageSid: 'MMd43e72a131d5d27398c88c6ea5431094',
+
+  AccountSid: 'AC45263062787d3eda8583d555e65c6b05',
+
+  MediaContentType2: 'audio/3gpp',
+
+  From: '+15734270584',
+
+  MediaUrl0: 'https://api.twilio.com/2010-04-01/Accounts/AC45263062787d3eda8583d555e65c6b05/Messages/MMd43e72a131d5d27398c88c6ea5431094/Media/ME0698fcea331a1fb902d36c2efa77c3b4',
+
+  ApiVersion: '2010-04-01' }
+
+
+[ 'MMd43e72a131d5d27398c88c6ea5431094',
+
+  'CHARLESTON',
+
+  'MO',
+
+  'US',
+
+  'Testando',
+
+  '+15734270584',
+
+  2018-04-27T03:51:47.637Z ]
+  
+  */
