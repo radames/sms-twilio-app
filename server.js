@@ -51,6 +51,7 @@ app.get('/getMessages', function(request, response) {
 });
 //rest post for new messages
 app.post('/newSms',  (request, response) => {
+    console.log(request);
     const msg = request.body;
     addMessagetoDB(msg);
     response.send('<Response></Response>');
