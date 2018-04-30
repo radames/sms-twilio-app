@@ -1,9 +1,7 @@
-// server.js
-// where your node app starts
-
-// init project
 var express = require('express');
 var bodyParser = require('body-parser');
+var twClient = require('twilio')(process.env.TWILIO_SID , process.env.TWILIO_AUTH);
+
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -25,6 +23,8 @@ db.serialize(function(){
   if (!exists) {
     db.run('CREATE TABLE Messages (msg_id integer PRIMARY KEY, SmsSid TEXT, msg_fromCity TEXT, msg_fromState TEXT, msg_fromCountry TEXT, msg_body TEXT, media_content TEXT, msg_FromNumber TEXT NOT NULL, msg_datetime TEXT NOT NULL)');
     console.log('New table Messages created!');
+    twClient.client.messages.each((message) => console.log(message.body));
+
   }
   else {
     console.log('Database "Messages" ready to go!');
