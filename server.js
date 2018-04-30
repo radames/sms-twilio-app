@@ -24,7 +24,15 @@ db.serialize(function(){
   if (!exists) {
     db.run('CREATE TABLE Messages (msg_id integer PRIMARY KEY, SmsSid TEXT, msg_fromCity TEXT, msg_fromState TEXT, msg_fromCountry TEXT, msg_body TEXT, media_content TEXT, msg_FromNumber TEXT NOT NULL, msg_datetime TEXT NOT NULL)');
     console.log('New table Messages created!');
-
+    //fetching archived messages from twilio server
+    
+    twClient.messages.list(function(err, messages) {
+      console.log('Listing messages using callbacks');
+      messages.forEach(function(message) {
+        console.log(message
+        // addMessagetoDB(message.request.body);
+      });
+    });
   }
   else {
     console.log('Database "Messages" ready to go!');
@@ -41,9 +49,6 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
 
-// endpoint to get all the dreams in the database
-// currently this is the only endpoint, ie. adding dreams won't update the database
-// read the sqlite3 module docs and try to add your own! https://www.npmjs.com/package/sqlite3
 app.get('/getMessages', function(request, response) {
   db.all('SELECT msg_fromCity, msg_fromState, msg_fromCountry, msg_body, media_content, msg_datetime from Messages ORDER BY msg_datetime', function(err, rows) {
     response.send(JSON.stringify(rows));
