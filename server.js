@@ -26,15 +26,17 @@ db.serialize(function(){
     console.log('New table Messages created!');
     //fetching archived messages from twilio server
     
-    twClient.messages.list(function(err, messages) {
+
+  }
+  else {
+     twClient.messages.list(function(err, messages) {
       console.log('Listing messages using callbacks');
       messages.forEach(function(message) {
-        console.log(message
+        console.log(message);
         // addMessagetoDB(message.request.body);
       });
     });
-  }
-  else {
+    
     console.log('Database "Messages" ready to go!');
     db.each('SELECT * from Messages', function(err, row) {
       if ( row ) {
