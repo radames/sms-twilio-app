@@ -33,6 +33,10 @@ db.serialize(function(){
       console.log('Listing messages using callbacks');
       messages.forEach(function(message) {
         console.log(message);
+        {SmsSid: message.sid,
+         FromCity: message.
+            const values = [message.SmsSid, message.FromCity, message.FromState, message.FromCountry, message.Body, JSON.stringify(mediaList) ,message.From, new Date()];
+
         // addMessagetoDB(message.request.body);
       });
     });
