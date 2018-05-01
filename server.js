@@ -24,17 +24,15 @@ db.serialize(function(){
   if (!exists) {
     db.run('CREATE TABLE Messages (msg_id integer PRIMARY KEY, SmsSid TEXT, msg_fromCity TEXT, msg_fromState TEXT, msg_fromCountry TEXT, msg_body TEXT, media_content TEXT, msg_FromNumber TEXT,  msg_datetime TEXT)');
     console.log('New table Messages created!');
-    
     //fetching archived messages from twilio server
-     twClient.messages.list(function(err, messages) {
-      console.log('Listing messages using callbacks');
-      messages.forEach(function(message) {
-        addMessagetoDB(message);
-      });
-    });
+    //  twClient.messages.list(function(err, messages) {
+    //   console.log('Listing messages using callbacks');
+    //   messages.forEach(function(message) {
+    //     addMessagetoDB(message);
+    //   });
+    // });
   }
   else {
-
     console.log('Database "Messages" ready to go!');
     db.each('SELECT * from Messages', function(err, row) {
       if ( row ) {
