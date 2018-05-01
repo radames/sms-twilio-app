@@ -22,25 +22,19 @@ var db = new sqlite3.Database(dbFile);
 // if ./.data/sqlite.db does not exist, create it, otherwise print records to console
 db.serialize(function(){
   if (!exists) {
-    db.run('CREATE TABLE Messages (msg_id integer PRIMARY KEY, SmsSid TEXT, msg_fromCity TEXT, msg_fromState TEXT, msg_fromCountry TEXT, msg_body TEXT, media_content TEXT, msg_FromNumber TEXT NOT NULL, msg_datetime TEXT NOT NULL)');
+    db.run('CREATE TABLE Messages (msg_id integer PRIMARY KEY, SmsSid TEXT, msg_fromCity TEXT, msg_fromState TEXT, msg_fromCountry TEXT, msg_body TEXT, media_content TEXT, msg_FromNumber TEXT,  msg_datetime TEXT)');
     console.log('New table Messages created!');
-    //fetching archived messages from twilio server
     
-
-  }
-  else {
+    //fetching archived messages from twilio server
      twClient.messages.list(function(err, messages) {
       console.log('Listing messages using callbacks');
       messages.forEach(function(message) {
-        console.log(message);
-        {SmsSid: message.sid,
-         FromCity: message.
-            const values = [message.SmsSid, message.FromCity, message.FromState, message.FromCountry, message.Body, JSON.stringify(mediaList) ,message.From, new Date()];
-
-        // addMessagetoDB(message.request.body);
+        addMessagetoDB(message);
       });
     });
-    
+  }
+  else {
+
     console.log('Database "Messages" ready to go!');
     db.each('SELECT * from Messages', function(err, row) {
       if ( row ) {
