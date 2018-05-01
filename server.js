@@ -52,6 +52,7 @@ app.get('/getMessages', function(request, response) {
     response.send(JSON.stringify(rows));
   });
 });
+
 //rest post for new messages
 app.post('/newSms',  (request, response) => {
     const msg = request.body;
@@ -83,3 +84,4 @@ function addMessagetoDB(message){
 var listener = app.listen(process.env.PORT, function () {
   console.log('"our app is listening on port ' + listener.address().port);
 });
+
